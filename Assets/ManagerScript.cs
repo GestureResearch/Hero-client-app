@@ -6,41 +6,45 @@ using TMPro;
 
 public class ManagerScript : MonoBehaviour {
 
-    public GameObject image;
-
     public TextMeshProUGUI text;
     public float scrollSpeed = 10.0f;
-
     public Text liveText;
 
-    private RectTransform text1RectTransform, text2RectTransform;
-
-    float startPosition;
-
-    TextMeshProUGUI text1, text2, text3;
+    private TextMeshProUGUI cloneText;
+    private RectTransform textRectTransform;
+    private string sourceText;
+    private string tempText;
+    private RectTransform cloneRectTransform;
 
     // Use this for initialization
-    void Awake ()
-    {
-        text1 = Instantiate(text) as TextMeshProUGUI;
-        text1RectTransform = text1.GetComponent<RectTransform>();
-        text1RectTransform.SetParent(image.transform);
-        text1RectTransform.localPosition = Vector3.zero;
+    void Awake () {
+        textRectTransform = text.GetComponent<RectTransform>();
+        
+        cloneText = Instantiate(text) as TextMeshProUGUI;
+        cloneRectTransform = cloneText.GetComponent<RectTransform>();
+        cloneRectTransform.SetParent(textRectTransform);
+        cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
+        cloneRectTransform.localScale = new Vector3(1, 1, 1);
+        cloneText.text = text.text;  
+
     }
 
-    private void Update()
+    private IEnumerator Start()
     {
-        text1.text = liveText.text;
-        text1RectTransform.localPosition = new Vector3(text1RectTransform.localPosition.x - scrollSpeed, text1RectTransform.localPosition.y, text1RectTransform.localPosition.z);
-        if (text1RectTransform.localPosition.x < -1200)
-        {
-            text2 = text1;
-            text1 = Instantiate(text2, Vector3.left * 1200,Quaternion.identity,text2.transform) as TextMeshProUGUI;
-        }
-        if (text1RectTransform.localPosition.x + 1200 < -text.preferredWidth)
-        {
+        Vector3 startPosition = textRectTransform.localPosition;
 
-            Destroy(text2);
-        }
+        float scrollPosition = 0;
+
+        while (true)
+        {
+            var text1 = liveText.text;
+            text.text = text1;
+            cloneText.text = text1;
+            var width = text.preferredWidth + 30;
+            textRectTransform.localPosition = new Vector3((-scrollPosition % width) - (text.preferredWidth + 30), startPosition.y, startPosition.z);
+            cloneRectTransform.localPosition = new Vector3(text.preferredWidth + 30, 0, cloneRectTransform.position.z);
+            scrollPosition += scrollSpeed * 20 * Time.deltaTime;         
+            yield return null;
+        }      
     }
-}
+}﻿
