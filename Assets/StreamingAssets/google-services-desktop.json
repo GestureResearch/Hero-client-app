@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100455921916",
+    "firebase_url": "https://hero-firebase-access.firebaseio.com",
+    "project_id": "hero-firebase-access",
+    "storage_bucket": "hero-firebase-access.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100455921916:android:4e9f9c0e22ca538d",
+        "android_client_info": {
+          "package_name": "com.hero.liveapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100455921916-ou39d3jakev2pmcppeuiqc4ekf969l01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmFNeLNdVn62EAmdT_1h_L5DdveCfxyq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100455921916-ou39d3jakev2pmcppeuiqc4ekf969l01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
