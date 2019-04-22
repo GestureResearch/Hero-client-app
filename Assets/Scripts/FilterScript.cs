@@ -18,7 +18,7 @@ public class FilterScript : MonoBehaviour
     
     private int count;
 
-    private GameObject[] contentObjects;
+    private List<GameObject> contentObjects;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,6 @@ public class FilterScript : MonoBehaviour
 
     void InstantiateContent()
     {
-        int i = 0;
         questions_reference.GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
@@ -45,10 +44,11 @@ public class FilterScript : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
                 foreach(var rules in snapshot.Children)
                 {
-                    contentObjects[i] = Instantiate(contentPrefab, container);
-                    contentObjects[i].transform.GetChild(0).GetComponent<Text>().text = rules.Key;
-                    contentObjects[i].transform.GetChild(1).GetComponent<Toggle>().isOn = int.Parse(rules.Value.ToString()) != 0;
-                } 
+                    GameObject _object = Instantiate(contentPrefab, container);
+                    _object.transform.GetChild(0).GetComponent<Text>().text = rules.Key;
+                    _object.transform.GetChild(1).GetComponent<Toggle>().isOn = int.Parse(rules.Value.ToString()) != 0;
+                    contentObjects.Add(_object);
+                }
             }
         });
     }
