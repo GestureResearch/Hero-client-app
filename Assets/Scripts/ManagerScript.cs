@@ -22,6 +22,8 @@ public class ManagerScript : MonoBehaviour
     void Update()
     {
         questions_reference.ValueChanged += HandleValueChanged;
+        text.fontSize += 1;
+        text.fontSize -= 1;
     }
 
     void HandleValueChanged(object sender, ValueChangedEventArgs args)
@@ -33,7 +35,14 @@ public class ManagerScript : MonoBehaviour
             else
             {
                 DataSnapshot snapshot = task.Result;
-                text.text = snapshot.GetRawJsonValue();
+                string stringData = "";
+                foreach (var childSnapshot in snapshot.Children)
+                {
+                    var childName = childSnapshot.Key.ToString ();
+                    stringData += childName.ToString();
+                }
+
+                text.text = stringData;
             }
         });
     }
